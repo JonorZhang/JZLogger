@@ -14,7 +14,9 @@
             <connections>
                 <outlet property="caseSensitiveBtn" destination="hhJ-T0-edr" id="KB1-3X-Uqv"/>
                 <outlet property="filterBtn" destination="wn8-zW-EA2" id="02Y-54-vbl"/>
+                <outlet property="fontSizeSlider" destination="dJK-io-1ft" id="TaQ-Mu-RLc"/>
                 <outlet property="moreSettingBtn" destination="IMK-JQ-WCp" id="Mpv-oP-fT4"/>
+                <outlet property="moreSettingPanel" destination="5gP-87-5hC" id="kfX-wa-XNC"/>
                 <outlet property="regExpBtn" destination="A7D-qn-gwm" id="ijA-5Q-MF9"/>
                 <outlet property="searchBar" destination="VTV-PV-zfQ" id="CKf-hn-CP4"/>
                 <outlet property="textView" destination="kJF-Jt-iyD" id="qa2-bV-PKX"/>
@@ -43,10 +45,9 @@
                             <rect key="frame" x="0.0" y="0.0" width="40" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="Fiq-ch-q8Y"/>
-                                <constraint firstAttribute="height" constant="44" id="FxV-cQ-e6f"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                            <state key="normal" title=".*"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                            <state key="normal" title=". *"/>
                             <connections>
                                 <action selector="regExpClicked:" destination="-1" eventType="touchUpInside" id="gPu-hJ-XSj"/>
                             </connections>
@@ -56,7 +57,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="htL-YY-nXs"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <state key="normal" title="Aa"/>
                             <connections>
                                 <action selector="caseSensitiveClicked:" destination="-1" eventType="touchUpInside" id="ALG-Pm-q9H"/>
@@ -67,7 +68,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="00i-sY-Hki"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <state key="normal" title="“”"/>
                             <connections>
                                 <action selector="wholeWordClicked:" destination="-1" eventType="touchUpInside" id="KsQ-a8-6vo"/>
@@ -82,7 +83,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="aBm-KQ-1Bv"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <state key="normal" title="⧖"/>
                             <connections>
                                 <action selector="filterClicked:" destination="-1" eventType="touchUpInside" id="kkD-Ah-H9y"/>
@@ -93,7 +94,7 @@
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="dHm-yJ-fuh"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                            <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="23"/>
                             <state key="normal" title="⫶"/>
                             <connections>
                                 <action selector="moreSettingClicked:" destination="-1" eventType="touchUpInside" id="cS4-Zg-wEK"/>
@@ -108,19 +109,78 @@
                         <constraint firstAttribute="height" constant="44" id="yLP-G9-0K1"/>
                     </constraints>
                 </stackView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5gP-87-5hC">
+                    <rect key="frame" x="8" y="768" width="398" height="50"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moreSettingBg" translatesAutoresizingMaskIntoConstraints="NO" id="aW2-ey-pIz">
+                            <rect key="frame" x="0.0" y="0.0" width="398" height="50"/>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Yak-Eg-lcP">
+                            <rect key="frame" x="5" y="5" width="388" height="30"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FID-e3-gy4">
+                                    <rect key="frame" x="0.0" y="0.0" width="388" height="30"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FontSize " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yEj-oR-ziE">
+                                            <rect key="frame" x="0.0" y="0.0" width="60" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5g-hc-kZn">
+                                            <rect key="frame" x="65" y="0.0" width="8.5" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="14" minValue="7" maxValue="20" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJK-io-1ft">
+                                            <rect key="frame" x="76.5" y="0.0" width="283" height="31"/>
+                                            <connections>
+                                                <action selector="fontSizeValueChanged:" destination="-1" eventType="valueChanged" id="dLc-Yh-JmV"/>
+                                            </connections>
+                                        </slider>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A+" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQA-D2-nDW">
+                                            <rect key="frame" x="362.5" y="0.0" width="25.5" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Yak-Eg-lcP" secondAttribute="bottom" constant="15" id="37f-7y-abO"/>
+                        <constraint firstAttribute="trailing" secondItem="Yak-Eg-lcP" secondAttribute="trailing" constant="5" id="LGq-f3-1Vu"/>
+                        <constraint firstItem="Yak-Eg-lcP" firstAttribute="top" secondItem="5gP-87-5hC" secondAttribute="top" constant="5" id="UJp-wP-cj0"/>
+                        <constraint firstItem="aW2-ey-pIz" firstAttribute="top" secondItem="5gP-87-5hC" secondAttribute="top" id="WZk-oi-JAp"/>
+                        <constraint firstAttribute="bottom" secondItem="aW2-ey-pIz" secondAttribute="bottom" id="fHX-Cn-ai8"/>
+                        <constraint firstItem="aW2-ey-pIz" firstAttribute="leading" secondItem="5gP-87-5hC" secondAttribute="leading" id="fyn-bP-d2B"/>
+                        <constraint firstItem="Yak-Eg-lcP" firstAttribute="leading" secondItem="5gP-87-5hC" secondAttribute="leading" constant="5" id="m7R-PN-Hnd"/>
+                        <constraint firstAttribute="trailing" secondItem="aW2-ey-pIz" secondAttribute="trailing" id="xv9-Ep-Mdm"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.92540210485458374" green="0.92555385828018188" blue="0.92536979913711548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="qgP-QP-u5j" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="LFs-gA-ex2"/>
                 <constraint firstItem="qgP-QP-u5j" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Lje-K9-tlj"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kJF-Jt-iyD" secondAttribute="trailing" id="P6C-TZ-BQT"/>
+                <constraint firstItem="5gP-87-5hC" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-8" id="TE5-XD-H8h"/>
+                <constraint firstItem="qgP-QP-u5j" firstAttribute="top" secondItem="5gP-87-5hC" secondAttribute="bottom" id="ZR4-cB-1Rw"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qgP-QP-u5j" secondAttribute="trailing" id="asj-T5-MFa"/>
                 <constraint firstItem="kJF-Jt-iyD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ct1-g2-fGq"/>
                 <constraint firstItem="kJF-Jt-iyD" firstAttribute="bottom" secondItem="qgP-QP-u5j" secondAttribute="top" id="djh-sz-yLH"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="kJF-Jt-iyD" secondAttribute="top" id="iuJ-id-cW5"/>
+                <constraint firstItem="5gP-87-5hC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="yta-LQ-gJc"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="296" y="161"/>
+            <point key="canvasLocation" x="295.6521739130435" y="160.04464285714286"/>
         </view>
     </objects>
+    <resources>
+        <image name="moreSettingBg" width="28.5" height="31"/>
+    </resources>
 </document>

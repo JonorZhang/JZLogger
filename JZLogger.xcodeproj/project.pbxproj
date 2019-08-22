@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FA47119230ECF93009B0B46 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA47118230ECF93009B0B46 /* Images.xcassets */; };
 		EA4B5AAB230B9C8B00A441D0 /* JZLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4B5AA1230B9C8B00A441D0 /* JZLogger.framework */; };
 		EA4B5AB0230B9C8B00A441D0 /* JZLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4B5AAF230B9C8B00A441D0 /* JZLoggerTests.swift */; };
 		EA4B5AB2230B9C8B00A441D0 /* JZLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = EA4B5AA4230B9C8B00A441D0 /* JZLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1FA47118230ECF93009B0B46 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EA4B5AA1230B9C8B00A441D0 /* JZLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JZLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA4B5AA4230B9C8B00A441D0 /* JZLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JZLogger.h; sourceTree = "<group>"; };
 		EA4B5AA5230B9C8B00A441D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			children = (
 				EAAA4765230E809D001ADDB2 /* JZFileLogTextViewController.xib */,
 				EAAA475B230E62B0001ADDB2 /* Info.plist */,
+				1FA47118230ECF93009B0B46 /* Images.xcassets */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAAA4766230E809D001ADDB2 /* JZFileLogTextViewController.xib in Resources */,
+				1FA47119230ECF93009B0B46 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
