@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import JZLogger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,11 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-    JZFileLogger.shared.appendRecord("今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n今天天气真好\n")
-
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
-        let navVc = UINavigationController(rootViewController: JZFileLogListTableViewController())
+        let navVc = UINavigationController(rootViewController: MainViewController(nibName: "MainViewController", bundle: .main))
         window?.rootViewController = navVc
         window?.makeKeyAndVisible()
 

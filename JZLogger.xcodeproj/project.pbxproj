@@ -13,7 +13,8 @@
 		EA4B5ABC230BA1DA00A441D0 /* JZFileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4B5ABB230BA1DA00A441D0 /* JZFileLogger.swift */; };
 		EAAA4703230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4702230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift */; };
 		EAAA4706230D4F18001ADDB2 /* JZFileLogTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4704230D4F18001ADDB2 /* JZFileLogTextViewController.swift */; };
-		EAAA4707230D4F18001ADDB2 /* JZFileLogTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4705230D4F18001ADDB2 /* JZFileLogTextViewController.xib */; };
+		EAAA4760230E631D001ADDB2 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4759230E62AF001ADDB2 /* Resource.bundle */; };
+		EAAA4766230E809D001ADDB2 /* JZFileLogTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4765230E809D001ADDB2 /* JZFileLogTextViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,6 +24,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = EA4B5AA0230B9C8B00A441D0;
 			remoteInfo = JZLogger;
+		};
+		EAAA4768230E80FE001ADDB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EA4B5A98230B9C8B00A441D0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAAA4758230E62AF001ADDB2;
+			remoteInfo = Resource;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -36,7 +44,9 @@
 		EA4B5ABB230BA1DA00A441D0 /* JZFileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZFileLogger.swift; sourceTree = "<group>"; };
 		EAAA4702230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZFileLogListTableViewController.swift; sourceTree = "<group>"; };
 		EAAA4704230D4F18001ADDB2 /* JZFileLogTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZFileLogTextViewController.swift; sourceTree = "<group>"; };
-		EAAA4705230D4F18001ADDB2 /* JZFileLogTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JZFileLogTextViewController.xib; sourceTree = "<group>"; };
+		EAAA4759230E62AF001ADDB2 /* Resource.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Resource.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		EAAA475B230E62B0001ADDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAAA4765230E809D001ADDB2 /* JZFileLogTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JZFileLogTextViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +65,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EAAA4756230E62AF001ADDB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -63,6 +80,7 @@
 			children = (
 				EA4B5AA3230B9C8B00A441D0 /* JZLogger */,
 				EA4B5AAE230B9C8B00A441D0 /* JZLoggerTests */,
+				EAAA475A230E62B0001ADDB2 /* Resource */,
 				EA4B5AA2230B9C8B00A441D0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +90,7 @@
 			children = (
 				EA4B5AA1230B9C8B00A441D0 /* JZLogger.framework */,
 				EA4B5AAA230B9C8B00A441D0 /* JZLoggerTests.xctest */,
+				EAAA4759230E62AF001ADDB2 /* Resource.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,9 +120,17 @@
 			children = (
 				EAAA4702230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift */,
 				EAAA4704230D4F18001ADDB2 /* JZFileLogTextViewController.swift */,
-				EAAA4705230D4F18001ADDB2 /* JZFileLogTextViewController.xib */,
 			);
 			path = LogUI;
+			sourceTree = "<group>";
+		};
+		EAAA475A230E62B0001ADDB2 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				EAAA4765230E809D001ADDB2 /* JZFileLogTextViewController.xib */,
+				EAAA475B230E62B0001ADDB2 /* Info.plist */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -132,6 +159,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				EAAA4769230E80FE001ADDB2 /* PBXTargetDependency */,
 			);
 			name = JZLogger;
 			productName = JZLogger;
@@ -156,6 +184,23 @@
 			productReference = EA4B5AAA230B9C8B00A441D0 /* JZLoggerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		EAAA4758230E62AF001ADDB2 /* Resource */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EAAA475C230E62B0001ADDB2 /* Build configuration list for PBXNativeTarget "Resource" */;
+			buildPhases = (
+				EAAA4755230E62AF001ADDB2 /* Sources */,
+				EAAA4756230E62AF001ADDB2 /* Frameworks */,
+				EAAA4757230E62AF001ADDB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Resource;
+			productName = Resource;
+			productReference = EAAA4759230E62AF001ADDB2 /* Resource.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -171,6 +216,9 @@
 						LastSwiftMigration = 1020;
 					};
 					EA4B5AA9230B9C8B00A441D0 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+					EAAA4758230E62AF001ADDB2 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
 				};
@@ -189,6 +237,7 @@
 			targets = (
 				EA4B5AA0230B9C8B00A441D0 /* JZLogger */,
 				EA4B5AA9230B9C8B00A441D0 /* JZLoggerTests */,
+				EAAA4758230E62AF001ADDB2 /* Resource */,
 			);
 		};
 /* End PBXProject section */
@@ -198,7 +247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAAA4707230D4F18001ADDB2 /* JZFileLogTextViewController.xib in Resources */,
+				EAAA4760230E631D001ADDB2 /* Resource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +255,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EAAA4757230E62AF001ADDB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EAAA4766230E809D001ADDB2 /* JZFileLogTextViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,6 +287,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EAAA4755230E62AF001ADDB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -237,6 +301,11 @@
 			isa = PBXTargetDependency;
 			target = EA4B5AA0230B9C8B00A441D0 /* JZLogger */;
 			targetProxy = EA4B5AAC230B9C8B00A441D0 /* PBXContainerItemProxy */;
+		};
+		EAAA4769230E80FE001ADDB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EAAA4758230E62AF001ADDB2 /* Resource */;
+			targetProxy = EAAA4768230E80FE001ADDB2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -374,6 +443,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = JZLogger/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -381,6 +451,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = jz.JZLogger;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -401,6 +472,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = JZLogger/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -408,6 +480,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = mh_dylib;
 				PRODUCT_BUNDLE_IDENTIFIER = jz.JZLogger;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -454,6 +527,45 @@
 			};
 			name = Release;
 		};
+		EAAA475D230E62B0001ADDB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = NO;
+				DEVELOPMENT_TEAM = J3FWM26YDF;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Resource/Info.plist;
+				INSTALL_PATH = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = jz.Resource;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		EAAA475E230E62B0001ADDB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = NO;
+				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = J3FWM26YDF;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Resource/Info.plist;
+				INSTALL_PATH = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = jz.Resource;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -480,6 +592,15 @@
 			buildConfigurations = (
 				EA4B5AB9230B9C8B00A441D0 /* Debug */,
 				EA4B5ABA230B9C8B00A441D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EAAA475C230E62B0001ADDB2 /* Build configuration list for PBXNativeTarget "Resource" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EAAA475D230E62B0001ADDB2 /* Debug */,
+				EAAA475E230E62B0001ADDB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

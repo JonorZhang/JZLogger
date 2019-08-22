@@ -13,6 +13,14 @@ import UIKit
     @objc public static let shared = JZFileLogger()
     private override init() {}
     
+    @objc public static let resourceBundle: Bundle? = {
+        let fwBundle = Bundle(for: JZFileLogger.self)
+        if let srcPath = fwBundle.path(forResource: "Resource", ofType: "bundle") {
+            return Bundle(path: srcPath)
+        }
+        return nil
+    }()
+    
     let fileManager = FileManager.default
     
     lazy var fileHandle: FileHandle = {

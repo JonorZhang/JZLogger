@@ -11,6 +11,8 @@
 		EAAA471F230D5340001ADDB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAAA471E230D5340001ADDB2 /* Assets.xcassets */; };
 		EAAA4722230D5340001ADDB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4720230D5340001ADDB2 /* LaunchScreen.storyboard */; };
 		EAAA4736230D5497001ADDB2 /* JZLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; };
+		EAAA4738230E2932001ADDB2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4737230E2932001ADDB2 /* MainViewController.swift */; };
+		EAAA473C230E37A8001ADDB2 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAAA473B230E37A8001ADDB2 /* MainViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +30,13 @@
 			remoteGlobalIDString = EA4B5AAA230B9C8B00A441D0;
 			remoteInfo = JZLoggerTests;
 		};
+		EAAA476D230EA088001ADDB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EAAA4729230D5353001ADDB2 /* JZLogger.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EAAA4759230E62AF001ADDB2;
+			remoteInfo = Resource;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +46,8 @@
 		EAAA4721230D5340001ADDB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EAAA4723230D5340001ADDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAAA4729230D5353001ADDB2 /* JZLogger.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JZLogger.xcodeproj; path = ../JZLogger.xcodeproj; sourceTree = "<group>"; };
+		EAAA4737230E2932001ADDB2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		EAAA473B230E37A8001ADDB2 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,9 +84,11 @@
 			isa = PBXGroup;
 			children = (
 				EAAA4717230D533E001ADDB2 /* AppDelegate.swift */,
-				EAAA471E230D5340001ADDB2 /* Assets.xcassets */,
+				EAAA4737230E2932001ADDB2 /* MainViewController.swift */,
+				EAAA473B230E37A8001ADDB2 /* MainViewController.xib */,
 				EAAA4720230D5340001ADDB2 /* LaunchScreen.storyboard */,
 				EAAA4723230D5340001ADDB2 /* Info.plist */,
+				EAAA471E230D5340001ADDB2 /* Assets.xcassets */,
 			);
 			path = LoggerDemo;
 			sourceTree = "<group>";
@@ -85,6 +98,7 @@
 			children = (
 				EAAA472F230D5353001ADDB2 /* JZLogger.framework */,
 				EAAA4731230D5353001ADDB2 /* JZLoggerTests.xctest */,
+				EAAA476E230EA088001ADDB2 /* Resource.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -170,6 +184,13 @@
 			remoteRef = EAAA4730230D5353001ADDB2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		EAAA476E230EA088001ADDB2 /* Resource.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Resource.bundle;
+			remoteRef = EAAA476D230EA088001ADDB2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -179,6 +200,7 @@
 			files = (
 				EAAA4722230D5340001ADDB2 /* LaunchScreen.storyboard in Resources */,
 				EAAA471F230D5340001ADDB2 /* Assets.xcassets in Resources */,
+				EAAA473C230E37A8001ADDB2 /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAAA4738230E2932001ADDB2 /* MainViewController.swift in Sources */,
 				EAAA4718230D533E001ADDB2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,7 +281,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -313,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -329,6 +352,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J3FWM26YDF;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LoggerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -347,6 +371,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J3FWM26YDF;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LoggerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

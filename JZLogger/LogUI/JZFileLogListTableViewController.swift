@@ -83,11 +83,11 @@ import UIKit
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let textVc = JZFileLogTextViewController()
-        let data = JZFileLogger.shared.readLogFile(dataSource[indexPath.row]) ?? Data()
-        textVc.text = String(data: data, encoding: .utf8)
+        let textVc = JZFileLogTextViewController(nibName: "JZFileLogTextViewController", bundle: JZFileLogger.resourceBundle)
+        textVc.logFileURL = dataSource[indexPath.row]
         navigationController?.pushViewController(textVc, animated: true)
     }
 }
