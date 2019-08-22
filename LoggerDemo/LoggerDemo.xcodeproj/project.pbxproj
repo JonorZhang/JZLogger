@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FA4711D230EF7BE009B0B46 /* JZLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; };
+		1FA4711E230EF7BE009B0B46 /* JZLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EAAA4718230D533E001ADDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4717230D533E001ADDB2 /* AppDelegate.swift */; };
 		EAAA471F230D5340001ADDB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAAA471E230D5340001ADDB2 /* Assets.xcassets */; };
 		EAAA4722230D5340001ADDB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4720230D5340001ADDB2 /* LaunchScreen.storyboard */; };
@@ -16,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1FA4711F230EF7BE009B0B46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EAAA4729230D5353001ADDB2 /* JZLogger.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = EA4B5AA0230B9C8B00A441D0;
+			remoteInfo = JZLogger;
+		};
 		EAAA472E230D5353001ADDB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EAAA4729230D5353001ADDB2 /* JZLogger.xcodeproj */;
@@ -39,6 +48,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1FA47121230EF7BE009B0B46 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1FA4711E230EF7BE009B0B46 /* JZLogger.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		EAAA4714230D533E001ADDB2 /* LoggerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoggerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAAA4717230D533E001ADDB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FA4711D230EF7BE009B0B46 /* JZLogger.framework in Frameworks */,
 				EAAA4736230D5497001ADDB2 /* JZLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,10 +144,12 @@
 				EAAA4710230D533E001ADDB2 /* Sources */,
 				EAAA4711230D533E001ADDB2 /* Frameworks */,
 				EAAA4712230D533E001ADDB2 /* Resources */,
+				1FA47121230EF7BE009B0B46 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1FA47120230EF7BE009B0B46 /* PBXTargetDependency */,
 			);
 			name = LoggerDemo;
 			productName = LoggerDemo;
@@ -217,6 +243,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1FA47120230EF7BE009B0B46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JZLogger;
+			targetProxy = 1FA4711F230EF7BE009B0B46 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		EAAA4720230D5340001ADDB2 /* LaunchScreen.storyboard */ = {
@@ -349,6 +383,7 @@
 		EAAA4727230D5340001ADDB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J3FWM26YDF;
@@ -368,6 +403,7 @@
 		EAAA4728230D5340001ADDB2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J3FWM26YDF;

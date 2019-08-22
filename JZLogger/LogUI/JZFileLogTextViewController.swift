@@ -70,23 +70,27 @@ import UIKit
         }
     }
     
-    @IBAction func regExpClicked(_ sender: Any) {
+    @IBAction func regExpClicked(_ sender: UIButton) {
         print(#function)
+        sender.isSelected = !sender.isSelected
     }
     
-    @IBAction func caseSensitiveClicked(_ sender: Any) {
+    @IBAction func caseSensitiveClicked(_ sender: UIButton) {
         print(#function)
+        sender.isSelected = !sender.isSelected
     }
     
-    @IBAction func wholeWordClicked(_ sender: Any) {
+    @IBAction func wholeWordClicked(_ sender: UIButton) {
         print(#function)
+        sender.isSelected = !sender.isSelected
     }
     
-    @IBAction func filterClicked(_ sender: Any) {
+    @IBAction func filterClicked(_ sender: UIButton) {
         print(#function)
+        sender.isSelected = !sender.isSelected
     }
     
-    @IBAction func moreSettingClicked(_ sender: Any) {
+    @IBAction func moreSettingClicked(_ sender: UIButton) {
         let sx: CGFloat = 0.9, sy: CGFloat = 0.3
         let tx = moreSettingPanel.frame.size.width * (1.0 - sx) / 2.0
         let ty = moreSettingPanel.frame.size.height * (1.0 - sy) / 2.0
