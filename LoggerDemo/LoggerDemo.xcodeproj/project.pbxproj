@@ -7,24 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1FA4711D230EF7BE009B0B46 /* JZLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; };
-		1FA4711E230EF7BE009B0B46 /* JZLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EAAA4718230D533E001ADDB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4717230D533E001ADDB2 /* AppDelegate.swift */; };
 		EAAA471F230D5340001ADDB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAAA471E230D5340001ADDB2 /* Assets.xcassets */; };
 		EAAA4722230D5340001ADDB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4720230D5340001ADDB2 /* LaunchScreen.storyboard */; };
-		EAAA4736230D5497001ADDB2 /* JZLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; };
 		EAAA4738230E2932001ADDB2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4737230E2932001ADDB2 /* MainViewController.swift */; };
 		EAAA473C230E37A8001ADDB2 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAAA473B230E37A8001ADDB2 /* MainViewController.xib */; };
+		EAF6E9E5230F8013002DF738 /* JZLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; };
+		EAF6E9E6230F8021002DF738 /* JZLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; };
+		EAF6E9E7230F8021002DF738 /* JZLogger.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EAAA472F230D5353001ADDB2 /* JZLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1FA4711F230EF7BE009B0B46 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EAAA4729230D5353001ADDB2 /* JZLogger.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = EA4B5AA0230B9C8B00A441D0;
-			remoteInfo = JZLogger;
-		};
 		EAAA472E230D5353001ADDB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EAAA4729230D5353001ADDB2 /* JZLogger.xcodeproj */;
@@ -46,16 +39,23 @@
 			remoteGlobalIDString = EAAA4759230E62AF001ADDB2;
 			remoteInfo = Resource;
 		};
+		EAF6E9E8230F8021002DF738 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EAAA4729230D5353001ADDB2 /* JZLogger.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = EA4B5AA0230B9C8B00A441D0;
+			remoteInfo = JZLogger;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1FA47121230EF7BE009B0B46 /* Embed Frameworks */ = {
+		EAF6E9EA230F8021002DF738 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1FA4711E230EF7BE009B0B46 /* JZLogger.framework in Embed Frameworks */,
+				EAF6E9E7230F8021002DF738 /* JZLogger.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -78,8 +78,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FA4711D230EF7BE009B0B46 /* JZLogger.framework in Frameworks */,
-				EAAA4736230D5497001ADDB2 /* JZLogger.framework in Frameworks */,
+				EAF6E9E6230F8021002DF738 /* JZLogger.framework in Frameworks */,
+				EAF6E9E5230F8013002DF738 /* JZLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,12 +144,12 @@
 				EAAA4710230D533E001ADDB2 /* Sources */,
 				EAAA4711230D533E001ADDB2 /* Frameworks */,
 				EAAA4712230D533E001ADDB2 /* Resources */,
-				1FA47121230EF7BE009B0B46 /* Embed Frameworks */,
+				EAF6E9EA230F8021002DF738 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				1FA47120230EF7BE009B0B46 /* PBXTargetDependency */,
+				EAF6E9E9230F8021002DF738 /* PBXTargetDependency */,
 			);
 			name = LoggerDemo;
 			productName = LoggerDemo;
@@ -245,10 +245,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1FA47120230EF7BE009B0B46 /* PBXTargetDependency */ = {
+		EAF6E9E9230F8021002DF738 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = JZLogger;
-			targetProxy = 1FA4711F230EF7BE009B0B46 /* PBXContainerItemProxy */;
+			targetProxy = EAF6E9E8230F8021002DF738 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

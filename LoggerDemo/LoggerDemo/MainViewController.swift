@@ -9,7 +9,7 @@
 import UIKit
 import JZLogger
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var textFiled: UITextField!
     
@@ -23,17 +23,15 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         title = "使用示例"
         textFiled.clearButtonMode = .whileEditing
+        textFiled.delegate = self
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake, isShakeToShowLogs {
-            
             let logListVc = JZFileLogListTableViewController()
             navigationController?.pushViewController(logListVc, animated: true)
         }
     }
-    
-    
     
     @IBAction func insertLogMessageClicked(_ sender: UIButton) {
         var text = textFiled.text ?? "你没有输入内容，那我就占个位置啦～"
@@ -47,4 +45,13 @@ class MainViewController: UIViewController {
         sender.setTitleColor(isShakeToShowLogs ? #colorLiteral(red: 0.3054999709, green: 0.5893267989, blue: 1, alpha: 1) : #colorLiteral(red: 1, green: 0.05795724928, blue: 0.1601722556, alpha: 1), for: .normal)
     }
     
+    @IBAction func openLogListClicked(_ sender: Any) {
+        let logListVc = JZFileLogListTableViewController()
+        navigationController?.pushViewController(logListVc, animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textFiled.resignFirstResponder()
+        return true
+    }
 }

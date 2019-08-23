@@ -36,6 +36,21 @@ import UIKit
     
     @IBOutlet weak var fontSizeSlider: UISlider!
     
+    @IBOutlet weak var searchResultView: UIView!
+    
+    @IBOutlet weak var resultCountLabel: UILabel!
+    
+    private var matcheResults: (curIdx: Int, all: [NSTextCheckingResult]?) = (0, nil) {
+        didSet {
+            guard let resultAll = matcheResults.all else { return }
+            textView.textStorage.setAttributes([.backgroundColor : UIColor.yellow], range: resultAll[oldValue.curIdx].range)
+            let range = resultAll[matcheResults.curIdx].range
+            resultCountLabel.text = "\(matcheResults.curIdx + 1)/\(resultAll.count)"
+            textView.scrollRangeToVisible(range)
+            textView.textStorage.setAttributes([.backgroundColor : UIColor.red], range: range)
+        }
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,6 +63,8 @@ import UIKit
             fontSizeSlider.value = Float(fontSize)
         }
 
+        searchBar.delegate = self
+        
         observeKeyboard()
     }
     
@@ -57,14 +74,16 @@ import UIKit
     }
     
     func observeKeyboard() {
-        NotificationCenter.default.addObserver(forName: UIApplication.keyboardWillShowNotification, object: nil, queue: nil) { [unowned self](note) in
+        NotificationCenter.default.addObserver(forName: UIApplication.keyboardWillShowNotification, object: nil, queue: nil) { [weak self](note) in
+            guard let `self` = self else { return }
             if let endFrame = note.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect {
                 let dy = endFrame.origin.y - self.toolbarView.frame.origin.y - self.toolbarView.frame.size.height
                 self.toolbarBottomConstraint.constant = dy
                 self.view.layoutIfNeeded()
             }
         }
-        NotificationCenter.default.addObserver(forName: UIApplication.keyboardWillHideNotification, object: nil, queue: nil) { [unowned self](note) in
+        NotificationCenter.default.addObserver(forName: UIApplication.keyboardWillHideNotification, object: nil, queue: nil) { [weak self](note) in
+            guard let `self` = self else { return }
             self.toolbarBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
         }
@@ -105,4 +124,54 @@ import UIKit
         UserDefaults.standard.set(sender.value, forKey: kFontSizeKey)
         textView.font = .systemFont(ofSize: CGFloat(sender.value))
     }
+    
+    @IBAction func prevSearchResultClicked(_ sender: Any) {
+        guard matcheResults.curIdx > 0, let _ = matcheResults.all else { return }
+        matcheResults.curIdx -= 1
+    }
+    
+    @IBAction func nextSearchResultClicked(_ sender: Any) {
+        guard let resultAll = matcheResults.all, matcheResults.curIdx < resultAll.count - 1 else { return }
+        matcheResults.curIdx += 1
+    }
+    
+    @IBAction func toggleSearchResultViewClicked() {
+        searchResultView.isHidden = !searchResultView.isHidden
+        if let string = self.textView.text, searchResultView.isHidden {
+            let strRange = NSRange(location: 0, length: string.count)
+            self.textView.textStorage.removeAttribute(.backgroundColor, range: strRange)
+        }
+    }
 }
+
+extension JZFileLogTextViewController: UISearchBarDelegate {
+    
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        
+        if let string = self.textView.text, let pattern = self.searchBar.text {
+            var options: NSRegularExpression.Options = []
+            if !self.caseSensitiveBtn.isSelected { options.insert(.caseInsensitive) }
+            if self.wholeWordBtn.isSelected { options.insert(.useUnicodeWordBoundaries) }
+            
+            if let regExp = try? NSRegularExpression(pattern: pattern, options: options) {
+                DispatchQueue.global().async {
+                    let strRange = NSRange(location: 0, length: string.count)
+                    let results = regExp.matches(in: string, options: .reportCompletion, range: strRange)
+                    print(pattern, strRange, results.count, results)
+                    DispatchQueue.main.async {
+                        self.textView.textStorage.removeAttribute(.backgroundColor, range: strRange)
+                        results.forEach({ (res) in
+                            self.textView.textStorage.addAttribute(.backgroundColor, value: UIColor.yellow, range: res.range)
+                        })
+                        if results.count > 0 {
+                            self.toggleSearchResultViewClicked()
+                        }
+                        self.matcheResults = (0, results)
+                    }
+                }
+            }
+        }
+    }
+}
+

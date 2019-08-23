@@ -57,16 +57,16 @@ import UIKit
         let dev = UIDevice.current
         
         return """
-                Date/Time:              \(datetime)
-                name :                  \(dev.name)
-                model :                 \(dev.model)
-                systemName :            \(dev.systemName)
-                systemVersion :         \(dev.systemVersion)
-                identifierForVendor :   \(dev.identifierForVendor?.uuidString ?? "?")
-                bundleIdentifier:       \(Bundle.main.bundleIdentifier ?? "?")
-                AppVersion:             \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")
-                preferredLanguages:     \(Locale.preferredLanguages.first ?? "?")
-                infoDictionary:         \(Bundle.main.infoDictionary ?? [:])
+                ➤ Date/Time:                \(datetime)
+                ➤ name:                     \(dev.name)
+                ➤ model:                    \(dev.model)
+                ➤ systemName:               \(dev.systemName)
+                ➤ systemVersion:            \(dev.systemVersion)
+                ➤ identifierForVendor:      \(dev.identifierForVendor?.uuidString ?? "?")
+                ➤ bundleIdentifier:         \(Bundle.main.bundleIdentifier ?? "?")
+                ➤ AppVersion:               \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")
+                ➤ preferredLanguages:       \(Locale.preferredLanguages.first ?? "?")
+                ➤ infoDictionary:           \(Bundle.main.infoDictionary ?? [:])
                 ----------------------------------------------------------------------------------------
                 \n\n
                 """
