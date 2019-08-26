@@ -8,12 +8,12 @@
 
 import UIKit
 
-@objc public class JZFileLogger: NSObject {
+class JZFileLogger: NSObject {
     
-    @objc public static let shared = JZFileLogger()
+    static let shared = JZFileLogger()
     private override init() {}
     
-    @objc public static let resourceBundle: Bundle? = {
+    static let resourceBundle: Bundle? = {
         let fwBundle = Bundle(for: JZFileLogger.self)
         if let srcPath = fwBundle.path(forResource: "Resource", ofType: "bundle") {
             return Bundle(path: srcPath)
@@ -33,7 +33,7 @@ import UIKit
     }()
 
     /// log文件目录
-    @objc public lazy var logDir: URL = {
+    lazy var logDir: URL = {
         guard let cachesDir = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first else {
             fatalError("JZFileLogger couldn't find cachesDirectory")
         }
@@ -73,7 +73,7 @@ import UIKit
     }
     
     /// 当前log文件URL
-    @objc public lazy var logFileURL: URL = {
+    lazy var logFileURL: URL = {
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         let filename = fmt.string(from: Date()) + ".log"
@@ -90,19 +90,19 @@ import UIKit
     }()
     
     /// 所有历史log文件URL
-    @objc public func allLogFiles() -> [URL] {
+    func allLogFiles() -> [URL] {
         let subpaths = fileManager.subpaths(atPath: logDir.path)
         return subpaths?.map{ logDir.appendingPathComponent($0) } ?? []
     }
     
     /// 读取一个log文件内容
-    @objc public func readLogFile(_ url: URL) -> Data? {
+    func readLogFile(_ url: URL) -> Data? {
         let data = fileManager.contents(atPath: url.path)
         return data
     }
         
     /// 追加一条记录到当前log文件
-    @objc public func appendRecord(_ message: String) {
+    func appendRecord(_ message: String) {
         do {
             if !fileManager.fileExists(atPath: logFileURL.path) {
                 // 创建日志文件
@@ -123,7 +123,7 @@ import UIKit
     }
     
     /// 删除一个log文件
-    @objc public func deleteLogFile(_ url: URL) {
+    func deleteLogFile(_ url: URL) {
         guard fileManager.fileExists(atPath: url.path) else { return }
         do {
             try fileManager.removeItem(at: url)

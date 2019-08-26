@@ -8,49 +8,49 @@
 
 import UIKit
 
-@objc open class JZFileLogListTableViewController: UITableViewController {
-
+class JZFileLogListTableViewController: UITableViewController {
+    
     var dataSource = JZFileLogger.shared.allLogFiles()
     
-    open override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "日志列表"
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+    
     // MARK: - Table view data source
-
-    open override func numberOfSections(in tableView: UITableView) -> Int {
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
-    open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         print("numberOfRowsInSection:\(section)", dataSource.count)
         return dataSource.count
     }
-
-    open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") ?? UITableViewCell(style: .default, reuseIdentifier: "reuseIdentifier")
         print("cellForRowAt:\(indexPath)", dataSource.count)
         cell.textLabel?.text = dataSource[indexPath.row].lastPathComponent
         return cell
     }
-
+    
     // Override to support conditional editing of the table view.
-    open override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-
+    
     
     // Override to support editing the table view.
-    open override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             JZFileLogger.shared.deleteLogFile(dataSource[indexPath.row])
             dataSource = JZFileLogger.shared.allLogFiles()
@@ -58,36 +58,13 @@ import UIKit
         }
     }
     
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
-    open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let textVc = JZFileLogTextViewController(nibName: "JZFileLogTextViewController", bundle: JZFileLogger.resourceBundle)
-        textVc.logFileURL = dataSource[indexPath.row]
-        navigationController?.pushViewController(textVc, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let logFileName = dataSource[indexPath.row]
+        if let logData = JZFileLogger.shared.readLogFile(logFileName),
+            let logText = String(data: logData, encoding: .utf8) {
+            let logTextVc = JZFileLogTextViewController(logText: logText)
+            logTextVc.title = logFileName.lastPathComponent
+            navigationController?.pushViewController(logTextVc, animated: true)
+        }
     }
 }
