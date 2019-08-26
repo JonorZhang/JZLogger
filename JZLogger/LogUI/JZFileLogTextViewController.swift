@@ -246,7 +246,7 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchBar.resignFirstResponder()
-        if let string = textView.text, var pattern = searchBar.text {
+        if let string = textView.text, var pattern = searchBar.text, pattern.count > 0 {
             var options: NSRegularExpression.Options = [.anchorsMatchLines]
             if !caseSensitiveBtn.isSelected { options.insert(.caseInsensitive) }
             if wholeWordBtn.isSelected { pattern = #"\b\#(pattern)\b"# }
@@ -273,10 +273,7 @@ extension JZFileLogTextViewController: UICollectionViewDelegate, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if let start = searchBar.selectedTextRange?.start {
-            searchBar.text.ins = (searchBar.text ?? "") + regExpSymbols[indexPath.item]
-        }
+        searchBar.insertText(regExpSymbols[indexPath.item])
     }
 }
 
