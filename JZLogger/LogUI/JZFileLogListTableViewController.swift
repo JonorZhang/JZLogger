@@ -16,6 +16,11 @@ class JZFileLogListTableViewController: UITableViewController {
         super.viewDidLoad()
         
         title = "日志列表"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: self, action: #selector(close))
+    }
+    
+    @objc func close() {
+        navigationController?.dismiss(animated: true)
     }
     
     // MARK: - Table view data source
@@ -25,14 +30,16 @@ class JZFileLogListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("numberOfRowsInSection:\(section)", dataSource.count)
         return dataSource.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") ?? UITableViewCell(style: .default, reuseIdentifier: "reuseIdentifier")
-        print("cellForRowAt:\(indexPath)", dataSource.count)
         cell.textLabel?.text = dataSource[indexPath.row].lastPathComponent
+        if indexPath.row == 0 {
+            cell.textLabel?.text?.append("🔥")
+        }
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
@@ -40,22 +47,39 @@ class JZFileLogListTableViewController: UITableViewController {
         return true
     }
     
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            JZFileLogger.shared.deleteLogFile(dataSource[indexPath.row])
-            dataSource = JZFileLogger.shared.allLogFiles()
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        }
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        return [
+            UITableViewRowAction(style: .normal, title: "分享", handler: { _,_ in
+                print("clicked分享")
+                let logFileUrl = self.dataSource[indexPath.row]
+                let actVc = UIActivityViewController.init(activityItems: [logFileUrl], applicationActivities: nil)
+                self.present(actVc, animated: true)
+            }),
+            UITableViewRowAction(style: .destructive, title: "删除", handler: { _,_ in
+                print("clicked删除")
+                let alert = UIAlertController(title: nil, message: "确认删除？", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
+                alert.addAction(UIAlertAction(title: "删除", style: .destructive, handler: { _ in
+                    JZFileLogger.shared.deleteLogFile(self.dataSource[indexPath.row])
+                    self.dataSource = JZFileLogger.shared.allLogFiles()
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                }))
+                self.present(alert, animated: true)
+            })
+        ]
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let logFileName = dataSource[indexPath.row]
-        if let logData = JZFileLogger.shared.readLogFile(logFileName),
+        let logFileUrl = dataSource[indexPath.row]
+        if let logData = JZFileLogger.shared.readLogFile(logFileUrl),
             let logText = String(data: logData, encoding: .utf8) {
             let logTextVc = JZFileLogTextViewController(logText: logText)
-            logTextVc.title = logFileName.lastPathComponent
+            logTextVc.title = logFileUrl.lastPathComponent
             navigationController?.pushViewController(logTextVc, animated: true)
         }
+    }
+    
+    deinit {
+        print(#function, "JZFileLogListTableViewController")
     }
 }

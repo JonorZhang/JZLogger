@@ -23,30 +23,30 @@ class MainViewController: UIViewController, UITextFieldDelegate {
         textFiled.clearButtonMode = .whileEditing
         textFiled.delegate = self
         
-        shakeToShowLogsBtn.setTitle(GWLogger.enableShakeToShowLogList ? "摇一摇显示日志【已开启】" : "摇一摇显示日志【已关闭】", for: .normal)
-        shakeToShowLogsBtn.setTitleColor(GWLogger.enableShakeToShowLogList ? #colorLiteral(red: 0.3054999709, green: 0.5893267989, blue: 1, alpha: 1) : #colorLiteral(red: 1, green: 0.05795724928, blue: 0.1601722556, alpha: 1), for: .normal)
+        shakeToShowLogsBtn.setTitle(JZLogger.enableShakeToShowLogList ? "摇一摇显示日志【已开启】" : "摇一摇显示日志【已关闭】", for: .normal)
+        shakeToShowLogsBtn.setTitleColor(JZLogger.enableShakeToShowLogList ? #colorLiteral(red: 0.3054999709, green: 0.5893267989, blue: 1, alpha: 1) : #colorLiteral(red: 1, green: 0.05795724928, blue: 0.1601722556, alpha: 1), for: .normal)
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake, GWLogger.enableShakeToShowLogList {
-            GWLogger.showLogList(with: self)
+        if motion == .motionShake, JZLogger.enableShakeToShowLogList {
+            JZLogger.showLogList(with: self)
         }
     }
     
     @IBAction func insertLogMessageClicked(_ sender: UIButton) {
         var text = textFiled.text ?? "你没有输入内容，那我就占个位置啦～"
         if text.isEmpty { text = "你没有输入内容，那我就占个位置啦～" }
-        logDebug(text)
+        JZLogger.log(.warning, text)
     }
     
     @IBAction func shakeToShowLogsClicked(_ sender: UIButton) {
-        GWLogger.enableShakeToShowLogList = !GWLogger.enableShakeToShowLogList
-        sender.setTitle(GWLogger.enableShakeToShowLogList ? "摇一摇显示日志【已开启】" : "摇一摇显示日志【已关闭】", for: .normal)
-        sender.setTitleColor(GWLogger.enableShakeToShowLogList ? #colorLiteral(red: 0.3054999709, green: 0.5893267989, blue: 1, alpha: 1) : #colorLiteral(red: 1, green: 0.05795724928, blue: 0.1601722556, alpha: 1), for: .normal)
+        JZLogger.enableShakeToShowLogList = !JZLogger.enableShakeToShowLogList
+        sender.setTitle(JZLogger.enableShakeToShowLogList ? "摇一摇显示日志【已开启】" : "摇一摇显示日志【已关闭】", for: .normal)
+        sender.setTitleColor(JZLogger.enableShakeToShowLogList ? #colorLiteral(red: 0.3054999709, green: 0.5893267989, blue: 1, alpha: 1) : #colorLiteral(red: 1, green: 0.05795724928, blue: 0.1601722556, alpha: 1), for: .normal)
     }
     
     @IBAction func openLogListClicked(_ sender: Any) {
-        GWLogger.showLogList(with: self)
+        JZLogger.showLogList(with: self)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

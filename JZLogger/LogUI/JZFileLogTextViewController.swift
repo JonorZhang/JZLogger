@@ -142,6 +142,8 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
 
         if results.count > 0 {
             matcheResults = (0, results)
+            if moreSettingBtn.isSelected { moreSettingClicked(moreSettingBtn) }
+            if regExpBtn.isSelected { regExpClicked(regExpBtn) }
         } else {
             makeToast("无搜索结果")
         }
@@ -257,7 +259,7 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
             }
         }
         return true
-    }
+    }    
 }
 
 extension JZFileLogTextViewController: UICollectionViewDelegate, UICollectionViewDataSource {

@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1FA47119230ECF93009B0B46 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FA47118230ECF93009B0B46 /* Images.xcassets */; };
+		EA3B1E0C231517C100456E8B /* JZMailComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA3B1E0B231517C100456E8B /* JZMailComposeViewController.swift */; };
 		EA4B5AAB230B9C8B00A441D0 /* JZLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA4B5AA1230B9C8B00A441D0 /* JZLogger.framework */; };
 		EA4B5AB0230B9C8B00A441D0 /* JZLoggerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4B5AAF230B9C8B00A441D0 /* JZLoggerTests.swift */; };
 		EA4B5AB2230B9C8B00A441D0 /* JZLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = EA4B5AA4230B9C8B00A441D0 /* JZLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EA4B5ABC230BA1DA00A441D0 /* JZFileLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA4B5ABB230BA1DA00A441D0 /* JZFileLogger.swift */; };
-		EA78DA322313E6DE00C12C31 /* GWLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78DA312313E6DE00C12C31 /* GWLogger.swift */; };
+		EA78DA322313E6DE00C12C31 /* JZLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA78DA312313E6DE00C12C31 /* JZLogger.swift */; };
 		EAAA4703230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4702230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift */; };
 		EAAA4706230D4F18001ADDB2 /* JZFileLogTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4704230D4F18001ADDB2 /* JZFileLogTextViewController.swift */; };
 		EAAA4760230E631D001ADDB2 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4759230E62AF001ADDB2 /* Resource.bundle */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		1FA47118230ECF93009B0B46 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EA3B1E0B231517C100456E8B /* JZMailComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZMailComposeViewController.swift; sourceTree = "<group>"; };
 		EA4B5AA1230B9C8B00A441D0 /* JZLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JZLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA4B5AA4230B9C8B00A441D0 /* JZLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JZLogger.h; sourceTree = "<group>"; };
 		EA4B5AA5230B9C8B00A441D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -45,7 +47,7 @@
 		EA4B5AAF230B9C8B00A441D0 /* JZLoggerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZLoggerTests.swift; sourceTree = "<group>"; };
 		EA4B5AB1230B9C8B00A441D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EA4B5ABB230BA1DA00A441D0 /* JZFileLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZFileLogger.swift; sourceTree = "<group>"; };
-		EA78DA312313E6DE00C12C31 /* GWLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GWLogger.swift; sourceTree = "<group>"; };
+		EA78DA312313E6DE00C12C31 /* JZLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JZLogger.swift; sourceTree = "<group>"; };
 		EAAA4702230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZFileLogListTableViewController.swift; sourceTree = "<group>"; };
 		EAAA4704230D4F18001ADDB2 /* JZFileLogTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZFileLogTextViewController.swift; sourceTree = "<group>"; };
 		EAAA4759230E62AF001ADDB2 /* Resource.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Resource.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				EA4B5AA4230B9C8B00A441D0 /* JZLogger.h */,
-				EA78DA312313E6DE00C12C31 /* GWLogger.swift */,
+				EA78DA312313E6DE00C12C31 /* JZLogger.swift */,
 				EA4B5ABB230BA1DA00A441D0 /* JZFileLogger.swift */,
 				EAAA4708230D4F26001ADDB2 /* LogUI */,
 				EA4B5AA5230B9C8B00A441D0 /* Info.plist */,
@@ -125,6 +127,7 @@
 			children = (
 				EAAA4702230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift */,
 				EAAA4704230D4F18001ADDB2 /* JZFileLogTextViewController.swift */,
+				EA3B1E0B231517C100456E8B /* JZMailComposeViewController.swift */,
 			);
 			path = LogUI;
 			sourceTree = "<group>";
@@ -283,7 +286,8 @@
 				EAAA4706230D4F18001ADDB2 /* JZFileLogTextViewController.swift in Sources */,
 				EAAA4703230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift in Sources */,
 				EA4B5ABC230BA1DA00A441D0 /* JZFileLogger.swift in Sources */,
-				EA78DA322313E6DE00C12C31 /* GWLogger.swift in Sources */,
+				EA78DA322313E6DE00C12C31 /* JZLogger.swift in Sources */,
+				EA3B1E0C231517C100456E8B /* JZMailComposeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

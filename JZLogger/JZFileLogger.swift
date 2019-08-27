@@ -75,7 +75,7 @@ class JZFileLogger: NSObject {
     /// 当前log文件URL
     lazy var logFileURL: URL = {
         let fmt = DateFormatter()
-        fmt.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+        fmt.dateFormat = "yyyy-MM-dd-HH-mm-ss"
         let filename = fmt.string(from: Date()) + ".log"
         let fileurl = logDir.appendingPathComponent(filename, isDirectory: false)
         
@@ -92,7 +92,8 @@ class JZFileLogger: NSObject {
     /// 所有历史log文件URL
     func allLogFiles() -> [URL] {
         let subpaths = fileManager.subpaths(atPath: logDir.path)
-        return subpaths?.map{ logDir.appendingPathComponent($0) } ?? []
+        let fullpaths = subpaths?.map{ logDir.appendingPathComponent($0) }
+        return fullpaths?.sorted { $0.absoluteString > $1.absoluteString } ?? []
     }
     
     /// 读取一个log文件内容
@@ -130,7 +131,5 @@ class JZFileLogger: NSObject {
         } catch {
             print("JZFileLogger couldn't remove file \(url).")
         }
-    }
-    
-    
+    }    
 }
