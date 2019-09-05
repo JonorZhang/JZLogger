@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol JZFileLoggerDelegate: class {
+    func fileLogger(_ logger: JZFileLogger, didInsert text: String)
+}
+
 class JZFileLogger: NSObject {
     
     static let shared = JZFileLogger()
     private override init() {}
+    
+    weak var delegate: JZFileLoggerDelegate?
     
     static let resourceBundle: Bundle? = {
         let fwBundle = Bundle(for: JZFileLogger.self)
@@ -25,13 +31,13 @@ class JZFileLogger: NSObject {
     
     lazy var fileHandle: FileHandle = {
         do {
-            let handle = try FileHandle(forWritingTo: logFileURL as URL)
+            let handle = try FileHandle(forWritingTo: curLogFileURL as URL)
             return handle
         } catch {
-            fatalError("JZFileLogger couldn't get fileWritingHandle: \(logFileURL)")
+            fatalError("JZFileLogger couldn't get fileWritingHandle: \(curLogFileURL)")
         }
     }()
-
+    
     /// log文件目录
     lazy var logDir: URL = {
         guard let cachesDir = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first else {
@@ -50,11 +56,13 @@ class JZFileLogger: NSObject {
         return directoryURL
     }()
 
-    var deviceInfo: String {
+    func getDeviceInfo() -> String {
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
         let datetime = fmt.string(from: Date())
         let dev = UIDevice.current
+        
+        let appVersion = "\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?").\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "?")"
         
         return """
                 ➤ Date/Time:                \(datetime)
@@ -64,7 +72,7 @@ class JZFileLogger: NSObject {
                 ➤ systemVersion:            \(dev.systemVersion)
                 ➤ identifierForVendor:      \(dev.identifierForVendor?.uuidString ?? "?")
                 ➤ bundleIdentifier:         \(Bundle.main.bundleIdentifier ?? "?")
-                ➤ AppVersion:               \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?")
+                ➤ AppVersion:               \(appVersion)
                 ➤ preferredLanguages:       \(Locale.preferredLanguages.first ?? "?")
                 ➤ infoDictionary:           \(Bundle.main.infoDictionary ?? [:])
                 ----------------------------------------------------------------------------------------
@@ -73,14 +81,14 @@ class JZFileLogger: NSObject {
     }
     
     /// 当前log文件URL
-    lazy var logFileURL: URL = {
+    lazy var curLogFileURL: URL = {
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy-MM-dd-HH-mm-ss"
         let filename = fmt.string(from: Date()) + ".log"
         let fileurl = logDir.appendingPathComponent(filename, isDirectory: false)
         
         do {
-            try deviceInfo.write(to: fileurl, atomically: true, encoding: .utf8)
+            try getDeviceInfo().write(to: fileurl, atomically: true, encoding: .utf8)
             print("日志路径：", fileurl.path)
         } catch {
             fatalError("JZFileLogger couldn't create logFile: \(fileurl)")
@@ -90,7 +98,7 @@ class JZFileLogger: NSObject {
     }()
     
     /// 所有历史log文件URL
-    func allLogFiles() -> [URL] {
+    func getAllFileURLs() -> [URL] {
         let subpaths = fileManager.subpaths(atPath: logDir.path)
         let fullpaths = subpaths?.map{ logDir.appendingPathComponent($0) }
         return fullpaths?.sorted { $0.absoluteString > $1.absoluteString } ?? []
@@ -103,12 +111,12 @@ class JZFileLogger: NSObject {
     }
         
     /// 追加一条记录到当前log文件
-    func appendRecord(_ message: String) {
+    func insertText(_ message: String) {
         do {
-            if !fileManager.fileExists(atPath: logFileURL.path) {
+            if !fileManager.fileExists(atPath: curLogFileURL.path) {
                 // 创建日志文件
                 let line = message + "\n"
-                try line.write(to: logFileURL, atomically: true, encoding: .utf8)
+                try line.write(to: curLogFileURL, atomically: true, encoding: .utf8)
                 
             } else {
                 // 追加日志记录
@@ -117,9 +125,10 @@ class JZFileLogger: NSObject {
                 if let data = line.data(using: String.Encoding.utf8) {
                     fileHandle.write(data)
                 }
+                delegate?.fileLogger(self, didInsert: line)
             }
         } catch {
-            print("JZFileLogger couldn't  write to file \(logFileURL).")
+            print("JZFileLogger couldn't  write to file \(curLogFileURL).")
         }
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
+class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
     
     // MARK: - UI控件
 
@@ -40,36 +40,48 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var resultCountLabel: UILabel!
     
+    @IBOutlet weak var tipsMessageLabel: UILabel!
+    
+    @IBOutlet weak var autoScrollSwitch: UISwitch!
+    
+    
     // MARK: - 其他变量
 
     private let kFontSizeKey = "key.FontSize.JZFileLogTextViewController"
-    
+    private let kAutoScrollKey = "key.AutoScroll.JZFileLogTextViewController"
+
     private let regExpSymbols = [".", "*", "?", "^", "$", "-", "+", ",", "{", "}", "[", "]", "(", ")", ":", "\\", "/", "<", ">"]
 
-    var logText: String
+    enum LogContent {
+        case text(String) // 搜索跳转用text
+        case url(URL)     // 列表点击进来用url
+    }
+    let content: LogContent
 
+    var textCount: Int = 0
+    
+    // 该表达式非nil时，控制器只显示筛选搜索结果
     var regExp: NSRegularExpression?
     
     private var matcheResults: (curIdx: Int, all: [NSTextCheckingResult]?) = (0, nil) {
         didSet {
             guard let resultAll = matcheResults.all, resultAll.count > 0 else { return }
-            
             // 1. 如果是prev/next进来需要还原当前文本为未选中颜色
             if let oldResultAll = oldValue.all, oldResultAll == resultAll {
-                textView.textStorage.addAttributes([.backgroundColor : UIColor.yellow], range: oldResultAll[oldValue.curIdx].range)
+                textView.textStorage.setAttributes([.backgroundColor : UIColor.yellow], range: oldResultAll[oldValue.curIdx].range)
             }
+            
             // 2. 更新prev/next文本为选中颜色
             let range = resultAll[matcheResults.curIdx].range
             resultCountLabel.text = "\(matcheResults.curIdx + 1)/\(resultAll.count)"
+            textView.textStorage.setAttributes([.backgroundColor : UIColor.red], range: range)
             textView.scrollRangeToVisible(range)
-            textView.textStorage.addAttributes([.backgroundColor : UIColor.red], range: range)
         }
     }
     
     // MARK: - 生命周期
-
-    init(logText: String) {
-        self.logText = logText
+    init(content: LogContent) {
+        self.content = content
         super.init(nibName: "JZFileLogTextViewController", bundle: JZFileLogger.resourceBundle)
     }
     
@@ -80,42 +92,115 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        textView.text = logText
-        textView.isEditable = false
-        textView.textColor = .black
-        if let fontSize = UserDefaults.standard.value(forKey: kFontSizeKey) as? CGFloat {
-            textView.font = .systemFont(ofSize: fontSize)
-            fontSizeSlider.value = Float(fontSize)
-        }
-                
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "分享", style: .plain, target: self, action: #selector(shared))
+        
+        setupTextView(content)
+        searchBar.delegate = self
+
         symbolCollView.register(JZSymbolCollViewCell.self, forCellWithReuseIdentifier: "JZSymbolCollViewCell")
         symbolCollView.collectionViewLayout = JZSymbolCollViewLayout()
         
         observeKeyboard()
-        
-        if let regExp = regExp {
-            searchBar.text = regExp.pattern
-            search(in: logText, regExp: regExp)
-        }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if case .url(let url) = content {
+            toggleTipsMessage("努力加载中...🏃🏿‍♂️", show: true)
+            DispatchQueue.global().async { [weak self] in
+                guard let data = JZFileLogger.shared.readLogFile(url),
+                    let text = String(data: data, encoding: .utf8) else {
+                        self?.toggleTipsMessage("JZFileLogTextViewController内容错误 url:\(url)", show: true)
+                        return
+                }
+                DispatchQueue.main.async { [weak self] in
+                    guard let `self` = self else { return }
+                    JZFileLogger.shared.delegate = self
+
+                    self.toggleTipsMessage(show: false)
+                    self.textView.text = text
+                    self.textCount = text.count
+                    self.scrollToBottomIfNeed(true)
+                }
+            }
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
         print(#function, self.classForCoder)
     }
 
     // MARK: - 私有函数
+    
+    @objc func shared() {
+        var activityItems: [Any] = []
+        switch content {
+        case .url(let logFileUrl):
+            activityItems.append(logFileUrl)
+        case .text(let logText):
+            activityItems.append(logText)
+        }
+        let actVc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        self.present(actVc, animated: true)
+    }
+    
+    private func toggleTipsMessage(_ message: String = "", show: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.tipsMessageLabel.superview?.isHidden = !show
+            self?.tipsMessageLabel.text = message
+        }
+    }
+    
+    private func setupTextView(_ content: LogContent) {
+        textView.isEditable = false
+        textView.textColor = .black
+        if case .text(let text) = content {
+            textView.text = text
+            textCount = text.count
+            if let regExp = regExp {
+                searchBar.text = regExp.pattern
+                search(in: text, regExp: regExp)
+            }
+            scrollToBottomIfNeed(true)
+        }
+        if let fontSize = UserDefaults.standard.value(forKey: kFontSizeKey) as? CGFloat {
+            textView.font = .systemFont(ofSize: fontSize)
+            fontSizeSlider.value = Float(fontSize)
+        }
+        
+        if let isAutoScroll = UserDefaults.standard.value(forKey: kAutoScrollKey) as? Bool {
+            autoScrollSwitch.isOn = isAutoScroll
+        } else {
+            autoScrollSwitch.isOn = true
+        }
+    }
+    
+    func fileLogger(_ logger: JZFileLogger, didInsert text: String) {
+        if case .url(let url) = content, logger.curLogFileURL == url {
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
+                self.textView?.insertText(text)// text.append(text) //textStorage.append(NSAttributedString(string: text)) //
+                self.textCount += text.count
+                self.scrollToBottomIfNeed()
+            }
+        }
+    }
 
     private func observeKeyboard() {
         NotificationCenter.default.addObserver(forName: UIApplication.keyboardWillShowNotification, object: nil, queue: nil) { [weak self](note) in
+            print("keyboardWillShowNotification ")
             guard let `self` = self else { return }
             if let endFrame = note.userInfo?["UIKeyboardFrameEndUserInfoKey"] as? CGRect {
                 let dy = endFrame.origin.y - self.toolbarView.frame.origin.y - self.toolbarView.frame.size.height
                 self.toolbarBottomConstraint.constant += dy
                 self.view.layoutIfNeeded()
+                self.scrollToBottomIfNeed()
             }
         }
+
         NotificationCenter.default.addObserver(forName: UIApplication.keyboardWillHideNotification, object: nil, queue: nil) { [weak self](note) in
+            print("keyboardWillHideNotification ")
             guard let `self` = self else { return }
             self.toolbarBottomConstraint.constant = 0
             self.view.layoutIfNeeded()
@@ -131,21 +216,45 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func search(in string: String, regExp: NSRegularExpression) {
-        let strRange = NSRange(location: 0, length: string.count)
-        let results = regExp.matches(in: string, options: .reportCompletion, range: strRange)
-        textView.textStorage.removeAttribute(.backgroundColor, range: strRange)
-        results.forEach({ (res) in
-            textView.textStorage.addAttributes([.backgroundColor : UIColor.yellow], range: res.range)
-        })
-        searchResultView.isHidden = !(results.count > 0)
-        view.bringSubviewToFront(searchResultView)
+        self.toggleTipsMessage("正在搜索......🔍", show: true)
+        DispatchQueue.global().async {
+            let date = Date()
+            print("search+ 1", Date().timeIntervalSince(date))
+            let strRange = NSRange(location: 0, length: self.textCount)
+            print("search+ 2", Date().timeIntervalSince(date))
+            let results = regExp.matches(in: string, options: .reportCompletion, range: strRange)
+            print("search+ 3", Date().timeIntervalSince(date))
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
+                self.textView.textStorage.removeAttribute(.backgroundColor, range: strRange)
+                print("search+ 4", Date().timeIntervalSince(date))
+                results.forEach({ (res) in
+                    self.textView.textStorage.setAttributes([.backgroundColor : UIColor.yellow], range: res.range)
+                })
+                print("search+ 5", Date().timeIntervalSince(date))
+                self.searchResultView.isHidden = !(results.count > 0)
+                self.view.bringSubviewToFront(self.searchResultView)
+                self.toggleTipsMessage(show: false)
 
-        if results.count > 0 {
-            matcheResults = (0, results)
-            if moreSettingBtn.isSelected { moreSettingClicked(moreSettingBtn) }
-            if regExpBtn.isSelected { regExpClicked(regExpBtn) }
-        } else {
-            makeToast("无搜索结果")
+                if results.count > 0 {
+                    self.matcheResults = (0, results)
+                    if self.moreSettingBtn.isSelected { self.moreSettingClicked(self.moreSettingBtn) }
+                    if self.regExpBtn.isSelected { self.regExpClicked(self.regExpBtn) }
+                } else {
+                    self.makeToast("无搜索结果")
+                }
+                print("search+ 6", Date().timeIntervalSince(date))
+            }
+        }
+    }
+    
+    private func scrollToBottomIfNeed(_ force: Bool = false) {
+        if force || self.autoScrollSwitch.isOn {
+            DispatchQueue.main.async {
+                let size = self.textView.contentSize
+                let visiRect = CGRect(x: 0, y: size.height-2, width: size.width, height: 2)
+                self.textView.scrollRectToVisible(visiRect, animated: true)
+            }
         }
     }
     
@@ -161,6 +270,7 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
     @IBAction func caseSensitiveClicked(_ sender: UIButton) {
         print(#function)
         sender.isSelected = !sender.isSelected
+        self.scrollToBottomIfNeed()
     }
     
     @IBAction func wholeWordClicked(_ sender: UIButton) {
@@ -213,21 +323,23 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func showSearchResultsClicked(_ sender: Any) {
         if let regExp = matcheResults.all?.first?.regularExpression {
-            let linePattern = #"^.*\#(regExp.pattern).*\n"#
             
+            if self.regExp?.pattern == regExp.pattern { return }
+            
+            let linePattern = #"^.*\#(regExp.pattern).*\n"#
             if let lineRegExp = try? NSRegularExpression(pattern: linePattern, options: regExp.options) {
                 
-                let strRange = NSRange(location: 0, length: logText.count)
-                let results = lineRegExp.matches(in: logText, options: .reportCompletion, range: strRange)
+                let strRange = NSRange(location: 0, length: self.textCount)
+                let results = lineRegExp.matches(in: textView.text, options: .reportCompletion, range: strRange)
 
                 var matchsLines: String = ""
                 results.forEach({ (res) in
-                    if let range = Range<String.Index>(res.range, in: logText) {
-                        matchsLines += logText[range]
+                    if let range = Range<String.Index>(res.range, in: textView.text) {
+                        matchsLines += textView.text[range]
                     }
                 })
                 
-                let logTextVc = JZFileLogTextViewController(logText: matchsLines)
+                let logTextVc = JZFileLogTextViewController(content: .text(matchsLines))
                 logTextVc.title = linePattern
                 logTextVc.regExp = regExp
                 navigationController?.pushViewController(logTextVc, animated: true)
@@ -246,20 +358,9 @@ class JZFileLogTextViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        searchBar.resignFirstResponder()
-        if let string = textView.text, var pattern = searchBar.text, pattern.count > 0 {
-            var options: NSRegularExpression.Options = [.anchorsMatchLines]
-            if !caseSensitiveBtn.isSelected { options.insert(.caseInsensitive) }
-            if wholeWordBtn.isSelected { pattern = #"\b\#(pattern)\b"# }
-            if let regExp = try? NSRegularExpression(pattern: pattern, options: options) {
-                search(in: string, regExp: regExp)
-            } else {
-                makeToast("正则表达式不正确")
-            }
-        }
-        return true
-    }    
+    @IBAction func autoScrollValueChanged(_ sender: UISwitch) {
+        UserDefaults.standard.set(sender.isOn, forKey: kAutoScrollKey)
+    }
 }
 
 extension JZFileLogTextViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -279,7 +380,25 @@ extension JZFileLogTextViewController: UICollectionViewDelegate, UICollectionVie
     }
 }
 
-class JZSymbolCollViewCell: UICollectionViewCell {
+extension JZFileLogTextViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchBar.resignFirstResponder()
+        if let string = textView.text, var pattern = searchBar.text, pattern.count > 0 {
+            var options: NSRegularExpression.Options = [.anchorsMatchLines]
+            if !caseSensitiveBtn.isSelected { options.insert(.caseInsensitive) }
+            if wholeWordBtn.isSelected { pattern = #"\b\#(pattern)\b"# }
+            if let regExp = try? NSRegularExpression(pattern: pattern, options: options) {
+                search(in: string, regExp: regExp)
+            } else {
+                makeToast("正则表达式不正确")
+            }
+        }
+        return true
+    }
+}
+
+fileprivate class JZSymbolCollViewCell: UICollectionViewCell {
     
     lazy var textLabel: UILabel = {
         let lb = UILabel()
@@ -303,7 +422,7 @@ class JZSymbolCollViewCell: UICollectionViewCell {
     }
 }
 
-class JZSymbolCollViewLayout: UICollectionViewFlowLayout {
+fileprivate class JZSymbolCollViewLayout: UICollectionViewFlowLayout {
     override init() {
         super.init()
         minimumLineSpacing = 1
@@ -317,3 +436,4 @@ class JZSymbolCollViewLayout: UICollectionViewFlowLayout {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

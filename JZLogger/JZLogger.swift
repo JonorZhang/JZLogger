@@ -137,7 +137,7 @@ fileprivate class Log: NSObject {
         #endif
         // 记录
         serialQueue.async {
-            JZFileLogger.shared.appendRecord(log.description)
+            JZFileLogger.shared.insertText(log.description)
         }
     }
 }

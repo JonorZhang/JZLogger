@@ -14,8 +14,8 @@ class JZLoggerTests: XCTestCase {
     let fl = JZFileLogger.shared
 
     override func setUp() {
-        fl.appendRecord("hello, world1!")
-        fl.appendRecord("hello, world2!")
+        fl.insertText("hello, world1!")
+        fl.insertText("hello, world2!")
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
 
@@ -36,14 +36,14 @@ class JZLoggerTests: XCTestCase {
     }
     
     func testMakeLog() {
-        let files = fl.allLogFiles()
+        let files = fl.getAllFileURLs()
         print(files)
 
         XCTAssert(files.count > 0)
     }
 
     func testAllLogFiles() {
-        guard let data = fl.readLogFile(fl.logFileURL),
+        guard let data = fl.readLogFile(fl.curLogFileURL),
             let str = String(data: data, encoding: .utf8) else {
             XCTAssert(false)
             return
