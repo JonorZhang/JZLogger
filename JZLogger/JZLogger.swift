@@ -116,6 +116,8 @@ fileprivate class Log: NSObject {
     /// 显示日志列表
     @objc public static func showLogList(with rootViewController: UIViewController) {
         DispatchQueue.main.async {
+//            let storyboard = UIStoryboard(name: "JZDeveloperViewController", bundle: JZFileLogger.resourceBundle)
+//            let navVc = storyboard.instantiateInitialViewController() as! UINavigationController
             let logListVc = JZFileLogListTableViewController()
             let navVc = UINavigationController(rootViewController: logListVc)
             rootViewController.present(navVc, animated: true)

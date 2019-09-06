@@ -13,7 +13,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="LoggerDemo" customModuleProvider="target">
             <connections>
                 <outlet property="insertLogMessageBtn" destination="EOV-p1-62l" id="ZqZ-kG-uxx"/>
-                <outlet property="shakeToShowLogsBtn" destination="thv-qD-KeS" id="Y78-TA-LVC"/>
                 <outlet property="textFiled" destination="ydj-S0-fJY" id="8hy-KT-oC0"/>
                 <outlet property="view" destination="gsZ-QS-bzt" id="7lh-Dm-JyK"/>
             </connections>
@@ -45,33 +44,29 @@
                         <outlet property="delegate" destination="-1" id="Lcf-Hk-byX"/>
                     </connections>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="thv-qD-KeS">
-                    <rect key="frame" x="115" y="187" width="184" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="4tL-DG-RRV"/>
-                    </constraints>
-                    <state key="normal" title="摇一摇显示日志【已开启】"/>
-                    <connections>
-                        <action selector="shakeToShowLogsClicked:" destination="-1" eventType="touchUpInside" id="Acv-rw-8se"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ceY-na-cgX">
-                    <rect key="frame" x="161" y="255" width="92" height="30"/>
+                    <rect key="frame" x="161" y="177" width="92" height="30"/>
                     <state key="normal" title="打开日志列表"/>
                     <connections>
                         <action selector="openLogListClicked:" destination="-1" eventType="touchUpInside" id="ks7-Rc-2w9"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="摇一摇显示日志" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXG-vf-k1k">
+                    <rect key="frame" x="146.5" y="437.5" width="121.5" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="O0e-XX-NMG" firstAttribute="trailing" secondItem="ydj-S0-fJY" secondAttribute="trailing" constant="40" id="1JE-AR-bjB"/>
                 <constraint firstItem="ydj-S0-fJY" firstAttribute="leading" secondItem="O0e-XX-NMG" secondAttribute="leading" constant="40" id="4HG-a1-NBf"/>
                 <constraint firstItem="EOV-p1-62l" firstAttribute="centerX" secondItem="gsZ-QS-bzt" secondAttribute="centerX" id="5rc-Ld-e37"/>
-                <constraint firstItem="ceY-na-cgX" firstAttribute="top" secondItem="thv-qD-KeS" secondAttribute="bottom" constant="38" id="7kT-5C-6IM"/>
-                <constraint firstItem="thv-qD-KeS" firstAttribute="centerX" secondItem="gsZ-QS-bzt" secondAttribute="centerX" id="Dxs-WH-dW4"/>
                 <constraint firstItem="ceY-na-cgX" firstAttribute="centerX" secondItem="gsZ-QS-bzt" secondAttribute="centerX" id="JRJ-rD-nkZ"/>
-                <constraint firstItem="thv-qD-KeS" firstAttribute="top" secondItem="EOV-p1-62l" secondAttribute="bottom" constant="34" id="dut-oq-Wwg"/>
+                <constraint firstItem="ceY-na-cgX" firstAttribute="top" secondItem="EOV-p1-62l" secondAttribute="bottom" constant="24" id="QdJ-u9-sgA"/>
+                <constraint firstItem="NXG-vf-k1k" firstAttribute="centerY" secondItem="gsZ-QS-bzt" secondAttribute="centerY" id="cFa-Ll-X2Q"/>
+                <constraint firstItem="NXG-vf-k1k" firstAttribute="centerX" secondItem="gsZ-QS-bzt" secondAttribute="centerX" id="flB-7V-1Gh"/>
                 <constraint firstItem="ydj-S0-fJY" firstAttribute="top" secondItem="O0e-XX-NMG" secondAttribute="top" constant="41" id="iNv-VY-D5H"/>
                 <constraint firstItem="EOV-p1-62l" firstAttribute="top" secondItem="ydj-S0-fJY" secondAttribute="bottom" constant="8" id="qJQ-ze-z0w"/>
                 <constraint firstItem="ydj-S0-fJY" firstAttribute="centerX" secondItem="gsZ-QS-bzt" secondAttribute="centerX" id="qXh-2N-58X"/>

@@ -17,6 +17,8 @@
 		EAAA4706230D4F18001ADDB2 /* JZFileLogTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAAA4704230D4F18001ADDB2 /* JZFileLogTextViewController.swift */; };
 		EAAA4760230E631D001ADDB2 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4759230E62AF001ADDB2 /* Resource.bundle */; };
 		EAAA4766230E809D001ADDB2 /* JZFileLogTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EAAA4765230E809D001ADDB2 /* JZFileLogTextViewController.xib */; };
+		EADD8E522322307E00D2ED9D /* JZDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADD8E512322307E00D2ED9D /* JZDeveloperViewController.swift */; };
+		EADD8E552322421700D2ED9D /* JZDeveloperViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADD8E532322308E00D2ED9D /* JZDeveloperViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		EAAA4759230E62AF001ADDB2 /* Resource.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Resource.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAAA475B230E62B0001ADDB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAAA4765230E809D001ADDB2 /* JZFileLogTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JZFileLogTextViewController.xib; sourceTree = "<group>"; };
+		EADD8E512322307E00D2ED9D /* JZDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JZDeveloperViewController.swift; sourceTree = "<group>"; };
+		EADD8E532322308E00D2ED9D /* JZDeveloperViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = JZDeveloperViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,7 @@
 		EA4B5A97230B9C8B00A441D0 = {
 			isa = PBXGroup;
 			children = (
+				EADD8E512322307E00D2ED9D /* JZDeveloperViewController.swift */,
 				EA4B5AA3230B9C8B00A441D0 /* JZLogger */,
 				EA4B5AAE230B9C8B00A441D0 /* JZLoggerTests */,
 				EAAA475A230E62B0001ADDB2 /* Resource */,
@@ -132,6 +137,7 @@
 		EAAA475A230E62B0001ADDB2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				EADD8E532322308E00D2ED9D /* JZDeveloperViewController.storyboard */,
 				EAAA4765230E809D001ADDB2 /* JZFileLogTextViewController.xib */,
 				EAAA475B230E62B0001ADDB2 /* Info.plist */,
 				1FA47118230ECF93009B0B46 /* Images.xcassets */,
@@ -270,6 +276,7 @@
 			files = (
 				EAAA4766230E809D001ADDB2 /* JZFileLogTextViewController.xib in Resources */,
 				1FA47119230ECF93009B0B46 /* Images.xcassets in Resources */,
+				EADD8E552322421700D2ED9D /* JZDeveloperViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +291,7 @@
 				EAAA4703230D4EE1001ADDB2 /* JZFileLogListTableViewController.swift in Sources */,
 				EA4B5ABC230BA1DA00A441D0 /* JZFileLogger.swift in Sources */,
 				EA78DA322313E6DE00C12C31 /* JZLogger.swift in Sources */,
+				EADD8E522322307E00D2ED9D /* JZDeveloperViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

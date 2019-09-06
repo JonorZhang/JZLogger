@@ -14,21 +14,16 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var textFiled: UITextField!
     
     @IBOutlet weak var insertLogMessageBtn: UIButton!
-    
-    @IBOutlet weak var shakeToShowLogsBtn: UIButton!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "使用示例"
         textFiled.clearButtonMode = .whileEditing
         textFiled.delegate = self
-        
-        shakeToShowLogsBtn.setTitle(JZLogger.enableShakeToShowLogList ? "摇一摇显示日志【已开启】" : "摇一摇显示日志【已关闭】", for: .normal)
-        shakeToShowLogsBtn.setTitleColor(JZLogger.enableShakeToShowLogList ? #colorLiteral(red: 0.3054999709, green: 0.5893267989, blue: 1, alpha: 1) : #colorLiteral(red: 1, green: 0.05795724928, blue: 0.1601722556, alpha: 1), for: .normal)
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake, JZLogger.enableShakeToShowLogList {
+        if motion == .motionShake {
             JZLogger.showLogList(with: self)
         }
     }
@@ -36,15 +31,9 @@ class MainViewController: UIViewController, UITextFieldDelegate {
     @IBAction func insertLogMessageClicked(_ sender: UIButton) {
         var text = textFiled.text ?? "你没有输入内容，那我就占个位置啦～"
         if text.isEmpty { text = "你没有输入内容，那我就占个位置啦～" }
-        JZLogger.log(.warning, text)
+        JZLogger.log(.warning, items: text)
     }
-    
-    @IBAction func shakeToShowLogsClicked(_ sender: UIButton) {
-        JZLogger.enableShakeToShowLogList = !JZLogger.enableShakeToShowLogList
-        sender.setTitle(JZLogger.enableShakeToShowLogList ? "摇一摇显示日志【已开启】" : "摇一摇显示日志【已关闭】", for: .normal)
-        sender.setTitleColor(JZLogger.enableShakeToShowLogList ? #colorLiteral(red: 0.3054999709, green: 0.5893267989, blue: 1, alpha: 1) : #colorLiteral(red: 1, green: 0.05795724928, blue: 0.1601722556, alpha: 1), for: .normal)
-    }
-    
+        
     @IBAction func openLogListClicked(_ sender: Any) {
         JZLogger.showLogList(with: self)
     }

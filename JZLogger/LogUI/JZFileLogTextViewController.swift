@@ -74,8 +74,8 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
             // 2. 更新prev/next文本为选中颜色
             let range = resultAll[matcheResults.curIdx].range
             resultCountLabel.text = "\(matcheResults.curIdx + 1)/\(resultAll.count)"
-            textView.textStorage.setAttributes([.backgroundColor : UIColor.red], range: range)
             textView.scrollRangeToVisible(range)
+            textView.textStorage.setAttributes([.backgroundColor : UIColor.red], range: range)
         }
     }
     
@@ -180,7 +180,7 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
         if case .url(let url) = content, logger.curLogFileURL == url {
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
-                self.textView?.insertText(text)// text.append(text) //textStorage.append(NSAttributedString(string: text)) //
+                self.textView?.insertText(text)
                 self.textCount += text.count
                 self.scrollToBottomIfNeed()
             }

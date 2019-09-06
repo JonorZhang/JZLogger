@@ -68,11 +68,14 @@ class JZFileLogListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") ?? UITableViewCell(style: .default, reuseIdentifier: "reuseIdentifier")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") ?? UITableViewCell(style: .value1, reuseIdentifier: "reuseIdentifier")
         cell.textLabel?.text = dataSource[indexPath.row].lastPathComponent
         if dataSource[indexPath.row] == JZFileLogger.shared.curLogFileURL {
             cell.textLabel?.text?.append("🔥")
         }
+        let fileSize = try? FileManager.default.attributesOfItem(atPath: dataSource[indexPath.row].path)[.size] as? Int
+        cell.detailTextLabel?.text = "\((fileSize ?? 0) / 1024) KB"
+            
         cell.accessoryType = .disclosureIndicator
         return cell
     }
