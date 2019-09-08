@@ -8,45 +8,45 @@
 
 import UIKit
 
-class JZFileLogListTableViewController: UITableViewController {
+class JZFileLogListTableViewController: UIViewController {
     
-    var dataSource = JZFileLogger.shared.getAllFileURLs()
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var trashBtn: UIButton!
+    @IBOutlet weak var selectAllBtn: UIButton!
+    @IBOutlet weak var editPanel: UIView!
     
-    private lazy var editBtn = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editClicked))
-    private lazy var exitBtn = UIBarButtonItem(title: "退出", style: .plain, target: self, action: #selector(exit))
-    private lazy var trashBtn: UIBarButtonItem = {
-        let btn = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(trashClicked))
-        btn.tintColor = .red
-        return btn
-    }()
+    var dataSource: [URL]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "日志列表"
-        navigationItem.leftBarButtonItem = exitBtn
-        navigationItem.rightBarButtonItem = editBtn
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(editClicked))
         tableView.allowsSelectionDuringEditing = true
         tableView.allowsMultipleSelectionDuringEditing = true
     }
     
-    @objc func exit() {
-        navigationController?.dismiss(animated: true)
-    }
-    
     @objc func editClicked() {
         trashBtn.isEnabled = false
+        selectAllBtn.isSelected = false
         tableView.isEditing = !tableView.isEditing
-        if tableView.isEditing {
-            navigationItem.leftBarButtonItem = trashBtn
-            navigationItem.rightBarButtonItem?.title = "取消"
-        } else {
-            navigationItem.leftBarButtonItem = exitBtn
-            navigationItem.rightBarButtonItem?.title = "编辑"
+        editPanel.isHidden = !tableView.isEditing
+        navigationItem.rightBarButtonItem?.title = tableView.isEditing ? "完成" : "编辑"
+    }
+    
+    @IBAction func selectAllClicked(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        for row in 0..<dataSource.count {
+            if sender.isSelected {
+                tableView.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: .none)
+                trashBtn.isEnabled = true
+            } else {
+                tableView.deselectRow(at: IndexPath(row: row, section: 0), animated: true)
+                trashBtn.isEnabled = false
+            }
         }
     }
     
-    @objc func trashClicked() {
+    @IBAction func trashClicked(_ sender: UIButton) {
         if let selectedRows = tableView.indexPathsForSelectedRows?.sorted(by: { $0 > $1}) {
             editClicked()
             selectedRows.forEach { (idxPath) in
@@ -57,34 +57,48 @@ class JZFileLogListTableViewController: UITableViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? JZFileLogTextViewController, let indexPath = tableView.indexPathForSelectedRow {
+            let logFileUrl = dataSource[indexPath.row]
+            vc.content = .url(logFileUrl)
+            vc.title = logFileUrl.lastPathComponent
+        }
+    }
+    
+    deinit {
+        print(#function, "JZFileLogListTableViewController")
+    }
+}
+
+extension JZFileLogListTableViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier") ?? UITableViewCell(style: .value1, reuseIdentifier: "reuseIdentifier")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") ?? UITableViewCell(style: .value1, reuseIdentifier: "LogCell")
         cell.textLabel?.text = dataSource[indexPath.row].lastPathComponent
         if dataSource[indexPath.row] == JZFileLogger.shared.curLogFileURL {
             cell.textLabel?.text?.append("🔥")
         }
         let fileSize = try? FileManager.default.attributesOfItem(atPath: dataSource[indexPath.row].path)[.size] as? Int
         cell.detailTextLabel?.text = "\((fileSize ?? 0) / 1024) KB"
-            
+        
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "删除", handler: { _,_ in
             print("clicked删除")
             let alert = UIAlertController(title: nil, message: "确认删除？", preferredStyle: .alert)
@@ -107,24 +121,16 @@ class JZFileLogListTableViewController: UITableViewController {
         return [delete, shared]
     }
     
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if tableView.isEditing, tableView.indexPathsForSelectedRows == nil {
             trashBtn.isEnabled = false
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
             trashBtn.isEnabled = true
             return
         }
-        let logFileUrl = dataSource[indexPath.row]
-        let logTextVc = JZFileLogTextViewController(content: .url(logFileUrl))
-        logTextVc.title = logFileUrl.lastPathComponent
-        navigationController?.pushViewController(logTextVc, animated: true)
-    }
-    
-    deinit {
-        print(#function, "JZFileLogListTableViewController")
     }
 }

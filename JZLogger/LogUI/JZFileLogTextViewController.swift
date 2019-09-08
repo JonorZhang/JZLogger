@@ -56,7 +56,7 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
         case text(String) // 搜索跳转用text
         case url(URL)     // 列表点击进来用url
     }
-    let content: LogContent
+    var content: LogContent!
 
     var textCount: Int = 0
     
@@ -86,7 +86,7 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     override func viewDidLoad() {
@@ -105,7 +105,7 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if case .url(let url) = content {
+        if case .url(let url)? = content {
             toggleTipsMessage("努力加载中...🏃🏿‍♂️", show: true)
             DispatchQueue.global().async { [weak self] in
                 guard let data = JZFileLogger.shared.readLogFile(url),
@@ -136,10 +136,12 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
     @objc func shared() {
         var activityItems: [Any] = []
         switch content {
-        case .url(let logFileUrl):
+        case .url(let logFileUrl)?:
             activityItems.append(logFileUrl)
-        case .text(let logText):
+        case .text(let logText)?:
             activityItems.append(logText)
+        case .none:
+            break
         }
         let actVc = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         self.present(actVc, animated: true)
@@ -177,7 +179,7 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
     }
     
     func fileLogger(_ logger: JZFileLogger, didInsert text: String) {
-        if case .url(let url) = content, logger.curLogFileURL == url {
+        if case .url(let url)? = content, logger.curLogFileURL == url {
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
                 self.textView?.insertText(text)
