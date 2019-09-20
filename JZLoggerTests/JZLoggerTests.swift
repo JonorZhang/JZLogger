@@ -37,9 +37,8 @@ class JZLoggerTests: XCTestCase {
     
     func testMakeLog() {
         let files = fl.getAllFileURLs()
-        print(files)
-
-        XCTAssert(files.count > 0)
+        print(files.count)
+        XCTAssert(files.count <= 30)
     }
 
     func testAllLogFiles() {

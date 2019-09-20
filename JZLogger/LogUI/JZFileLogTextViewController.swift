@@ -68,21 +68,20 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
             guard let resultAll = matcheResults.all, resultAll.count > 0 else { return }
             // 1. 如果是prev/next进来需要还原当前文本为未选中颜色
             if let oldResultAll = oldValue.all, oldResultAll == resultAll {
-                textView.textStorage.setAttributes([.backgroundColor : UIColor.yellow], range: oldResultAll[oldValue.curIdx].range)
+                textView.textStorage.addAttributes([.backgroundColor : UIColor.yellow], range: oldResultAll[oldValue.curIdx].range)
             }
             
             // 2. 更新prev/next文本为选中颜色
             let range = resultAll[matcheResults.curIdx].range
             resultCountLabel.text = "\(matcheResults.curIdx + 1)/\(resultAll.count)"
             textView.scrollRangeToVisible(range)
-            textView.textStorage.setAttributes([.backgroundColor : UIColor.red], range: range)
+            textView.textStorage.addAttributes([.backgroundColor : UIColor.red], range: range)
         }
     }
     
     // MARK: - 生命周期
-    init(content: LogContent) {
-        self.content = content
-        super.init(nibName: "JZFileLogTextViewController", bundle: JZFileLogger.resourceBundle)
+    private init() {
+        fatalError("请用storyboard加载")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -103,13 +102,21 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
         observeKeyboard()
     }
 
+    func stringFromData(_ data: Data) -> String? {
+        if let utf8Str = String(data: data, encoding: .utf8) {
+            return utf8Str
+        }
+        
+        return String(data: data, encoding: .ascii)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if case .url(let url)? = content {
             toggleTipsMessage("努力加载中...🏃🏿‍♂️", show: true)
             DispatchQueue.global().async { [weak self] in
                 guard let data = JZFileLogger.shared.readLogFile(url),
-                    let text = String(data: data, encoding: .utf8) else {
+                    let text = self?.stringFromData(data) else {
                         self?.toggleTipsMessage("JZFileLogTextViewController内容错误 url:\(url)", show: true)
                         return
                 }
@@ -179,7 +186,7 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
     }
     
     func fileLogger(_ logger: JZFileLogger, didInsert text: String) {
-        if case .url(let url)? = content, logger.curLogFileURL == url {
+        if case .url(let url)? = content, logger.currLogFileURL == url {
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
                 self.textView?.insertText(text)
@@ -231,7 +238,7 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
                 self.textView.textStorage.removeAttribute(.backgroundColor, range: strRange)
                 print("search+ 4", Date().timeIntervalSince(date))
                 results.forEach({ (res) in
-                    self.textView.textStorage.setAttributes([.backgroundColor : UIColor.yellow], range: res.range)
+                    self.textView.textStorage.addAttributes([.backgroundColor : UIColor.yellow], range: res.range)
                 })
                 print("search+ 5", Date().timeIntervalSince(date))
                 self.searchResultView.isHidden = !(results.count > 0)
@@ -253,8 +260,7 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
     private func scrollToBottomIfNeed(_ force: Bool = false) {
         if force || self.autoScrollSwitch.isOn {
             DispatchQueue.main.async {
-                let size = self.textView.contentSize
-                let visiRect = CGRect(x: 0, y: size.height-2, width: size.width, height: 2)
+                let visiRect = self.textView.caretRect(for: self.textView.endOfDocument)
                 self.textView.scrollRectToVisible(visiRect, animated: true)
             }
         }
@@ -325,14 +331,21 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
     
     @IBAction func showSearchResultsClicked(_ sender: Any) {
         if let regExp = matcheResults.all?.first?.regularExpression {
-            
+            let date = Date()
+            print("search+0 \(Date().timeIntervalSince(date))")
+
             if self.regExp?.pattern == regExp.pattern { return }
             
             let linePattern = #"^.*\#(regExp.pattern).*\n"#
             if let lineRegExp = try? NSRegularExpression(pattern: linePattern, options: regExp.options) {
                 
+                print("search+1 \(Date().timeIntervalSince(date))")
+
                 let strRange = NSRange(location: 0, length: self.textCount)
+
+                print("search+2 \(Date().timeIntervalSince(date))")
                 let results = lineRegExp.matches(in: textView.text, options: .reportCompletion, range: strRange)
+                print("search+3 \(Date().timeIntervalSince(date))")
 
                 var matchsLines: String = ""
                 results.forEach({ (res) in
@@ -340,11 +353,15 @@ class JZFileLogTextViewController: UIViewController, JZFileLoggerDelegate {
                         matchsLines += textView.text[range]
                     }
                 })
-                
-                let logTextVc = JZFileLogTextViewController(content: .text(matchsLines))
+                print("search+4 \(Date().timeIntervalSince(date))")
+
+                let logTextVc = storyboard?.instantiateViewController(withIdentifier: "JZFileLogTextViewController") as! JZFileLogTextViewController
+                logTextVc.content = .text(matchsLines)
                 logTextVc.title = linePattern
                 logTextVc.regExp = regExp
                 navigationController?.pushViewController(logTextVc, animated: true)
+                print("search+5 \(Date().timeIntervalSince(date))")
+
             } else {
                 makeToast("正则表达式不正确")
             }

@@ -62,11 +62,11 @@ fileprivate class Log: NSObject {
         let location = " <\(file):\(line)> \(function) "
         var mark: String {
             switch level {
-            case .error:    return "❌"
-            case .warning:  return "⚠️"
-            case .info:     return "🔵"
-            case .debug:    return "🚀"
-            case .verbose:  return "🚀"
+            case .error:    return "~> "
+            case .warning:  return "~> "
+            case .info:     return "~> "
+            case .debug:    return "~> "
+            case .verbose:  return "~> "
             }
         }
         return dateDesc + level.description + location + mark + message
@@ -93,7 +93,7 @@ fileprivate class Log: NSObject {
 }
 
 @objc public class JZLogger: NSObject {
-    
+        
     /// 日志的最高级别, 默认Debug:.debug / Release:.info。 log.level > maxLevel 的将会忽略
     public static var maxLevel: Level = {
         #if DEBUG
@@ -141,3 +141,6 @@ fileprivate class Log: NSObject {
         }
     }
 }
+
+    
+

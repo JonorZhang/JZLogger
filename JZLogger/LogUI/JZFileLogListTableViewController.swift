@@ -84,7 +84,7 @@ extension JZFileLogListTableViewController: UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LogCell") ?? UITableViewCell(style: .value1, reuseIdentifier: "LogCell")
         cell.textLabel?.text = dataSource[indexPath.row].lastPathComponent
-        if dataSource[indexPath.row] == JZFileLogger.shared.curLogFileURL {
+        if dataSource[indexPath.row] == JZFileLogger.shared.currLogFileURL {
             cell.textLabel?.text?.append("🔥")
         }
         let fileSize = try? FileManager.default.attributesOfItem(atPath: dataSource[indexPath.row].path)[.size] as? Int
